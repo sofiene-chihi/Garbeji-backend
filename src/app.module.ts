@@ -8,6 +8,13 @@ import { User } from './users/user.entity'
 import { Location } from './users/location.entity';
 import { ServicesModule } from './services/services.module';
 import { Service } from './services/service.entity';
+import { History } from './users/history.entity';
+import { Activity } from './activities/activity.entity';
+import { ActivitiesController } from './activities/activities.controller';
+import { ActivitiesService } from './activities/activities.service';
+import { ActivitiesModule } from './activities/activities.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { Notification } from './notifications/notification.entity';
 @Module({
   imports: [TypeOrmModule.forRoot({
       type: 'mysql',
@@ -16,11 +23,11 @@ import { Service } from './services/service.entity';
       username: 'root',
       password: '',
       database: 'garbeji_db',
-      entities: [User, Location,Service],
+      entities: [User, Location,Service, History, Activity, Notification],
       synchronize: true,
-  }), UsersModule, ServicesModule],
-  controllers: [AppController],
-  providers: [AppService],
+  }), UsersModule, ServicesModule, ActivitiesModule, NotificationsModule],
+  controllers: [AppController, ActivitiesController],
+  providers: [AppService, ActivitiesService],
 })
 export class AppModule {
   constructor(private connection: Connection) {}
