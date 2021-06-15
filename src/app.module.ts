@@ -15,6 +15,7 @@ import { ActivitiesService } from './activities/activities.service';
 import { ActivitiesModule } from './activities/activities.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { Notification } from './notifications/notification.entity';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [TypeOrmModule.forRoot({
       type: 'mysql',
@@ -25,7 +26,7 @@ import { Notification } from './notifications/notification.entity';
       database: 'garbeji_db',
       entities: [User, Location,Service, History, Activity, Notification],
       synchronize: true,
-  }), UsersModule, ServicesModule, ActivitiesModule, NotificationsModule],
+  }), UsersModule, ServicesModule, ActivitiesModule, NotificationsModule, AuthModule],
   controllers: [AppController, ActivitiesController],
   providers: [AppService, ActivitiesService],
 })

@@ -7,7 +7,7 @@ import { User } from './users/user.entity';
 export class AppService extends Seed{
   constructor(entityManager: EntityManager) {
     super(entityManager);
-    this.fakeIt(User);
+   // this.fakeIt(User);
   
   
   
