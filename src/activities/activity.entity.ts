@@ -1,13 +1,13 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { History } from "../users/history.entity";
 import { Notification } from "../notifications/notification.entity";
 
 @Entity()
-export class Activity {
+export class Activity extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number; 
 
-    @Column({type: "date"})
+    @Column({type: "time"})
     time;
 
     @Column()

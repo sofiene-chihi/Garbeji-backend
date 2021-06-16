@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { stringify } from 'querystring';
 import { LoginDto } from './dto/login-dto';
 import { RegisterDto } from './dto/register-dto';
 import { User } from './user.entity';
@@ -6,18 +7,52 @@ import { User } from './user.entity';
 @Injectable()
 export class UsersService {
 
+
   async findAll(): Promise<User[]> {
     const allUsers = await User.find();
     return (allUsers); 
   }
 
-  async getUser(credentials: LoginDto): Promise<User | undefined> {
-    const user= await User.findOne({email: credentials.email});
-    return user;
+  async userProfile(id : number): Promise<User>{
+      const user= await User.findOne(id);
+      return user;
+  } 
+
+  async deleteUser(id : number) :Promise<string> {
+      const user = this.userProfile(id);
+      (await user).remove();
+
+      return ("user removed successfully");
+  }
+
+  async updateUser(data: RegisterDto, id:number): Promise<User>{
+      const newUser = new User();
+      newUser.id= id;
+      newUser.firstName= data.firstName;
+      newUser.lastName= data.lastName;
+      newUser.email= data.email;
+      newUser.password= data.password;
+      newUser.profession= data.profession;
+      newUser.phone = data.phone;
+      newUser.bio= data.bio;
+      newUser.stars = data.stars;
+      newUser.img_url = data.img_url;
+      await User.save(newUser);
+      return newUser;
+
   }
 
 
-  
+  async getUserCredentials(email: string): Promise<LoginDto | undefined> {
+    const user= await User.findOne({email:email});
+    const credentials = {
+        email:"",
+        password:""
+    };
+    credentials.email=user.email;
+    credentials.password= user.password;
+    return credentials;
+  }
 
   async createUser(data: RegisterDto): Promise<User>{
     const newUser:User = new User();
@@ -25,6 +60,11 @@ export class UsersService {
     newUser.lastName= data.lastName;
     newUser.email= data.email;
     newUser.password= data.password;
+    newUser.profession= data.profession;
+    newUser.phone = data.phone;
+    newUser.bio= data.bio;
+    newUser.stars = data.stars;
+    newUser.img_url = data.img_url;
     await User.save(newUser);
     return newUser;
   }

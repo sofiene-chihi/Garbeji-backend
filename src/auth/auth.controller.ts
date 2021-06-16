@@ -19,13 +19,18 @@ export class AuthController {
         firstName: body.firstName,
         lastName: body.lastName,
         email: body.email,
-        password: hashed
+        password: hashed,
+        profession: body.profession,
+        phone: body.phone,
+        bio: body.bio,
+        stars: body.stars,
+        img_url: body.img_url
     })
   }
 
   @Post('login')
   async login(@Body() body:LoginDto){
-      const user= await this.usersService.getUser(body);
+      const user: LoginDto= await this.usersService.getUserCredentials(body.email);
       if( !user ){
           throw new NotFoundException("User not found !")
       }

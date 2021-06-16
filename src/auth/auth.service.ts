@@ -12,7 +12,7 @@ export class AuthService {
   ) {}
 
   async validateUser(loginDto: LoginDto): Promise<any> {
-    const user: User = await this.usersService.getUser(loginDto);
+    const user: LoginDto = await this.usersService.getUserCredentials(loginDto.email);
     if (user){
         const { password, ...result } = user;
         return result;

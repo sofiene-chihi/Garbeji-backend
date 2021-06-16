@@ -17,20 +17,10 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
-    @Post('login')
-    getUser(@Body() credentials: LoginDto): Promise< User > {
-        return this.usersService.getUser(credentials);
-    }
-
-    @Post('register')
-    createUser(@Body() data: RegisterDto): Promise<User> {
-        return this.usersService.createUser(data);
-    }
-
     @UseGuards(JwtAuthGuard)
-    @Get('profile')
-    getProfile(){
-        return "here is your profile"
+    @Get(':id')
+    getProfile(@Param('id') id): Promise<User>{
+        return this.usersService.userProfile(id);
     }
     
 }

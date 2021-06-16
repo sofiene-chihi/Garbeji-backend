@@ -3,4 +3,9 @@ export class RegisterDto{
     readonly lastName: string;
     readonly email:string;
     readonly password:string;
+    readonly profession: string;
+    readonly phone: string;
+    readonly bio:string;
+    readonly stars: number;
+    readonly img_url: string
 }
