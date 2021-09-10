@@ -43,18 +43,20 @@ export class UsersService {
   }
 
 
-  async getUserCredentials(email: string): Promise<LoginDto | undefined> {
-    const user= await User.findOne({email:email});
-    const credentials = {
-        email:"",
-        password:""
-    };
-    credentials.email=user.email;
-    credentials.password= user.password;
-    return credentials;
+  async getUserCredentials(email: string) {
+    const user= await User.findOne({email});
+
+    if(user){
+      return user
+    }else {
+      return null;
+    }
   }
 
   async createUser(data: RegisterDto): Promise<User>{
+    if(this.getUserCredentials(data.email) != null){
+      return null;
+    }
     const newUser:User = new User();
     newUser.firstName= data.firstName;
     newUser.lastName= data.lastName;
